@@ -50,7 +50,7 @@ function compareWords() {
       } else if (o.bIndex < 0) {
         diffWords += `<span class="remove">${o.line}</span>`;
       } else {
-        diffWords += `<span>${o.line}</span>`;
+        diffWords += o.line;
       }
     });
     
