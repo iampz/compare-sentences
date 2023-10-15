@@ -45,6 +45,10 @@ function compareWords() {
     wordDiff.lines.forEach(o => {
       if (o.line.trim() === '!!!') {
         diffWords += ' ';
+      } else if (o.bIndex < 0 && o.moved) {
+        diffWords += `<span class="remove">${o.line}</span>`;
+      } else if (o.moved) {
+        diffWords += `<span class="add">${o.line}</span>`;
       } else if (o.aIndex < 0) {
         diffWords += `<span class="add">${o.line}</span>`;
       } else if (o.bIndex < 0) {
@@ -52,6 +56,7 @@ function compareWords() {
       } else {
         diffWords += o.line;
       }
+
     });
     
     document.getElementById("lineCompare").innerHTML = '<b>Compare words results: </b><br />' + diffWords;
