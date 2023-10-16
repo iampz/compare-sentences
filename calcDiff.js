@@ -14,7 +14,12 @@ function splitWords(text) {
   while(end < input.textContent.length) {
     sel.modify('extend', 'forward', 'word');
     end = sel.focusOffset;
-    output.push( input.textContent.substring(start, end).trim() );
+    output.push(
+      input
+        .textContent
+        .substring(start, end)
+        .trim()
+    );
     start = end;
   }
 
@@ -33,9 +38,10 @@ function cleanupText(txt) {
 function compareWords() {
 
   const selectedElems = document.querySelectorAll('.selected');
+  const lineCompare = document.getElementById('lineCompare');
+  
   if (selectedElems.length === 3) {
     
-    const lineCompare = document.getElementById('lineCompare');
     const wordDiff = patienceDiffPlus(
       splitWords( selectedElems[0].textContent ),
       splitWords( selectedElems[1].textContent )
@@ -59,10 +65,10 @@ function compareWords() {
 
     });
     
-    document.getElementById("lineCompare").innerHTML = '<b>Compare words results: </b><br />' + diffWords;
+    lineCompare.innerHTML = '<b>Compare words results: </b><br />' + diffWords;
     
   } else {
-    document.getElementById("lineCompare").innerHTML = '<b>Select two lines to compare words.</b>';
+    lineCompare.innerHTML = '<b>Select two lines to compare words.</b>';
   }
 
 }
@@ -75,9 +81,9 @@ function calcDiff(evt) {
   var diffLines = '';
   diff.lines.forEach(o => {
     if (o.bIndex < 0 && o.moved) {
-      diffLines += `<p class="moveout">${o.line}</p>`;
+      diffLines += `<p class="remove">${o.line}</p>`;
     } else if (o.moved) {
-      diffLines += `<p class="movein">${o.line}</p>`;
+      diffLines += `<p class="add">${o.line}</p>`;
     } else if (o.aIndex < 0) {
       diffLines += `<p class="add">${o.line}</p>`;
     } else if (o.bIndex < 0) {
@@ -89,23 +95,48 @@ function calcDiff(evt) {
   diffLines += '<div id="lineCompare" contenteditable><b>Select two lines to compare words.</b></div>';
   document.getElementById("diff").innerHTML = diffLines;
   
-  document.querySelectorAll('p.add, p.remove').forEach(
-    elem => {
-      elem.onmouseover = evt => elem.classList.add('over');
-      elem.onmouseout = evt => elem.classList.remove('over');
-      elem.onmouseup = evt => {
-        
-        const elem = evt.target;
-        if (elem.classList.contains('selected')) {
-          elem.classList.remove('selected');
-        } else {
-          elem.classList.add('selected');
-        }
-        
-        compareWords();
-        
-      };
+  document
+    .querySelectorAll('p.add, p.remove')
+    .forEach( elem => {
+
+      elem.addEventListener(
+        'mouseover',
+        evt => elem.classList.add('over'),
+      );
+
+      elem.addEventListener(
+        'mouseout',
+        evt => elem.classList.remove('over'),
+      );
+
+      elem.addEventListener(
+        'mouseup',
+        evt => {
+          const elem = evt.target;
+          if (elem.classList.contains('selected')) {
+            elem.classList.remove('selected');
+          } else {
+            elem.classList.add('selected');
+          }
+          compareWords();
+        },
+      );
+
     }
   );
   
 }
+
+(function init() {
+  addEventListener(
+    'load',
+    evt => {
+      document
+        .getElementById('a')
+        .addEventListener('change', calcDiff);
+      document
+        .getElementById('b')
+        .addEventListener('change', calcDiff);
+    },
+  )
+})();
