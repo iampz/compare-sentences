@@ -1,7 +1,6 @@
 <html>
 <head>
 <script src="PatienceDiff.js"></script>
-<script src="calcDiff.js"></script>
 <link href="main.css" rel="stylesheet" />
 </head>
 <body>
@@ -15,25 +14,12 @@
     <span><b>Legend: </b></span>
     <span class="add">Added</span>
     <span class="remove">Removed</span>
-    <span class="moveout">Moved out</span>
-    <span class="movein">Moved in</span>
     <span class="selected">Selected</span>
   </p>
 </div>
 </div>
 
-<script>
-
-(function init() {
-  const a = document.getElementById('a');
-  const b = document.getElementById('b');
-  onload = evt => {
-    a.onkeyup = calcDiff;
-    b.onkeyup = calcDiff;
-  };
-})();
-
-</script>
+<script src="calcDiff.js"></script>
 
 </body>
 </html>
