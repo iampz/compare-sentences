@@ -133,10 +133,10 @@ function calcDiff(evt) {
     evt => {
       document
         .getElementById('a')
-        .addEventListener('change', calcDiff);
+        .addEventListener('input', calcDiff);
       document
         .getElementById('b')
-        .addEventListener('change', calcDiff);
+        .addEventListener('input', calcDiff);
     },
   )
 })();
