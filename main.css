@@ -43,11 +43,6 @@ p {
 .add {
   background: #dfd;
 }
-.moveout {
-  background: #ffd;
-}
-.movein {
-  background: #dff;
 }
 .remove {
   background: #fdd;
