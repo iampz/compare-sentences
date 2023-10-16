@@ -53,3 +53,7 @@ p {
 .selected {
   border: 2px dashed #e11;
 }
+
+.bold {
+  font-weight: bold;
+}
