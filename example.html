@@ -1,7 +1,6 @@
 <html>
 <head>
 <script src="PatienceDiff.js"></script>
-<script src="calcDiff.js"></script>
 <link href="main.css" rel="stylesheet" />
 </head>
 <body>
@@ -41,30 +40,32 @@
     <span><b>Legend: </b></span>
     <span class="add">Added</span>
     <span class="remove">Removed</span>
-    <span class="moveout">Moved out</span>
-    <span class="movein">Moved in</span>
     <span class="selected">Selected</span>
   </p>
 </div>
 </div>
 
+<script src="calcDiff.js"></script>
+
 <script>
-
-(function init() {
-  const a = document.getElementById('a');
-  const b = document.getElementById('b');
-  onload = evt => {
-    a.onkeyup = calcDiff;
-    b.onkeyup = calcDiff;
-    
-    calcDiff();
-    document.getElementById('diff').childNodes[6].classList.add('selected');
-    document.getElementById('diff').childNodes[12].classList.add('selected');
-    compareWords();
-    
-  };
+(function exampleSetup() {
+  addEventListener(
+    'load',
+    evt => {
+      calcDiff();
+      const diff = document.getElementById('diff');
+      diff
+        .childNodes[6]
+        .classList
+        .add('selected');
+      diff
+        .childNodes[12]
+        .classList
+        .add('selected');
+      compareWords();
+    },
+  );
 })();
-
 </script>
 
 </body>
