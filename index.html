@@ -6,19 +6,24 @@
 <body>
 
 <div>
-<textarea id="a"></textarea>
-<textarea id="b"></textarea>
-<div id="diff"></div>
-<div id="legend">
-  <p>
-    <span><b>Legend: </b></span>
-    <span class="add">Added</span>
-    <span class="remove">Removed</span>
-    <span class="selected">Selected</span>
-  </p>
-</div>
+  <textarea id="a"></textarea>
+  <textarea id="b"></textarea>
+  <div id="diff">
+    <div id="lineCompare">
+      <p class="alert">Input both sentences to compare.</p>
+    </div>
+  </div>
+  <div id="legend">
+    <p>
+      <span><b>Legend: </b></span>
+      <span class="add">Added</span>
+      <span class="remove">Removed</span>
+      <span class="selected">Selected</span>
+    </p>
+  </div>
 </div>
 
+<script>const autorun = false;</script>
 <script src="calcDiff.js"></script>
 
 </body>
