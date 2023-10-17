@@ -21,7 +21,7 @@
           );
       }
       if (args.linesSelected)
-        results.push('<button id="diffClear">Deselect lines</button>');
+        results.push('<button id="diffClear">Deselect all lines</button>');
       if (args.wrapDiv)
         results = ['<div id="lineCompare">', ...results, '</div>'];
     }
