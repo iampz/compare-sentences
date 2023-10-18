@@ -257,11 +257,11 @@
             lineDiff();
             const diff = document.getElementById('diff');
             diff
-              .childNodes[3]
+              .childNodes[4]
               .classList
               .add('selected');
             diff
-              .childNodes[7]
+              .childNodes[8]
               .classList
               .add('selected');
             wordDiff();
