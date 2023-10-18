@@ -65,6 +65,24 @@
       .replace(/  +/g, ' ')
       .replace(/^\s+|\s+$/g, '');
   }
+  
+  function splitLines(txt) {
+    var debug;
+    const lines = txt.split('\n');
+    const spaceArr = lines.map( line => {
+      return line
+        .split('')
+        .reduce(
+          ( arr, chr, i ) => {
+            return ( chr === ' ' ) ? arr.concat(i) : arr;
+          }, []
+        );
+    });
+    return [
+      lines.map( line => line.replace(/ /g, '') ),
+      spaceArr
+    ];
+  }
 
   function deselect() {
     const selectedElems = document.querySelectorAll('#diff .selected');
@@ -130,28 +148,48 @@
     
     var diffLines = '';
     var diffMatrix = [0,0];
+    const aLines = splitLines(a);
+    const bLines = splitLines(b);
     const diff = patienceDiffPlus(
-      a.split('\n'),
-      b.split('\n'),
+      aLines[0],
+      bLines[0],
     );
 
     diff.lines.forEach(o => {
       if (o.line) {
+        
+        var line;
+        if (o.bIndex < 0) {
+          line = aLines[0][o.aIndex].split('');
+          aLines[1][o.aIndex].forEach( pos => {
+            line.splice(pos, 0, ' ');
+          });
+          line = line.join('');
+        } else {
+          line = bLines[0][o.bIndex].split('');
+          bLines[1][o.bIndex].forEach( pos => {
+            line.splice(pos, 0, ' ');
+          });
+          line = line.join('');
+        }
+
+        console.log(o);
         if (o.bIndex < 0 && o.moved) {
-          diffLines += `<p class="remove">${o.line}</p>`;
+          diffLines += `<p class="remove">${line}</p>`;
           diffMatrix[0] = 1;
         } else if (o.moved) {
-          diffLines += `<p class="add">${o.line}</p>`;
+          diffLines += `<p class="add">${line}</p>`;
           diffMatrix[1] = 1;
         } else if (o.aIndex < 0) {
-          diffLines += `<p class="add">${o.line}</p>`;
+          diffLines += `<p class="add">${line}</p>`;
           diffMatrix[1] = 1;
         } else if (o.bIndex < 0) {
-          diffLines += `<p class="remove">${o.line}</p>`;
+          diffLines += `<p class="remove">${line}</p>`;
           diffMatrix[0] = 1;
         } else {
-          diffLines += `<p>${o.line}</p>`;
+          diffLines += `<p>${line}</p>`;
         }
+        
       }
     });
     
