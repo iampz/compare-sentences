@@ -173,7 +173,6 @@
           line = line.join('');
         }
 
-        console.log(o);
         if (o.bIndex < 0 && o.moved) {
           diffLines += `<p class="remove">${line}</p>`;
           diffMatrix[0] = 1;
